@@ -1,37 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const postsData = require('../utils/posts');
+const { getPosts, getPost, addPost, putPost, patchPost,  } = require('../controllers/posts');
+
+router.get('/', getPosts(_, res));
+
+router.get('/:slug', getPost(req, res));
 
 
-router.get('/', (_, res) => {
-  res.json(postsData);
-});
+router.post('/', addPost(req, res));
 
-router.get('/:slug', (req, res) => {
-  const postSlug = req.params.slug;
-  const requestedItem = postsData.find(element => element.slug === postSlug);
+router.put('/:slug', putPost(req, res));
 
-  if (!requestedItem) return res.status(404).json({ error: `Slag '${postSlug}' non trovato` });
+router.patch('/:slug', patchPost(req, res));
 
-  res.json(requestedItem);
-});
-
-
-router.post('/', function (req, res) {
-  res.send('Aggiunto nuovo dolce: ' + req.params.slug);
-});
-
-router.put('/:slug', function (req, res) {
-  res.send('[PUT] Modificato dolce: ' + req.params.slug);
-});
-
-router.patch('/:slug', function (req, res) {
-  res.send('[PATCH] Modificato il dolce: ' + req.params.slug);
-});
-
-router.delete('/:slug', function (req, res) {
-  res.send('Eliminato il dolce: ' + req.params.slug);
-});
+router.delete('/:slug', deletePost(req, res));
 
 
 module.exports = router;
