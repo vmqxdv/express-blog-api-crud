@@ -4,7 +4,8 @@ function getPosts(req, res) {
   let result = postsData;
 
   if (req.query.tags) {
-    result = postsData.filter(element => element.tags.includes(req.query.tags));
+    if (typeof req.query.tags === 'string') req.query.tags = [req.query.tags];
+    result = postsData.filter(post => req.query.tags.every(tag => post.tags.includes(tag)));
   };
 
   res.json(result);
