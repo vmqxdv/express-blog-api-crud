@@ -1,3 +1,5 @@
+const postsData = require('../utils/posts');
+
 function getPosts(req, res) {
   res.json(postsData);
 };
