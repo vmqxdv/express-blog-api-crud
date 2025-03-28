@@ -1,7 +1,13 @@
 const postsData = require('../data/posts');
 
 function getPosts(req, res) {
-  res.json(postsData);
+  let result = postsData;
+
+  if (req.query.tags) {
+    result = postsData.filter(element => element.tags.includes(req.query.tags));
+  };
+
+  res.json(result);
 };
 
 
