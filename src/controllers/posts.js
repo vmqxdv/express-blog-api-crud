@@ -31,8 +31,14 @@ function patchPost (req, res) {
 
 
 function deletePost(req, res) {
-  res.send('Eliminato il dolce: ' + req.params.slug);
+  const postSlug = req.params.slug;
+  const result = postsData.filter(element => element.slug != postSlug);
+
+  console.log(result);
+
+  res.status(204).json();
 };
+
 
 
 
