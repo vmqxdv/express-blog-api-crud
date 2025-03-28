@@ -1,4 +1,4 @@
-const postsData = require('../utils/posts');
+const postsData = require('../data/posts');
 
 function getPosts(req, res) {
   res.json(postsData);
