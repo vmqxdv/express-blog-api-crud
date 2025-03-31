@@ -49,15 +49,12 @@ function putPost(req, res) {
 
   const validParams = ['title', 'slug', 'content', 'image', 'tags']
 
-  if (!isSomeObjValid(newPost, validParams)) return res.status(422).json({ error: 'Controlla che tutti i campi siano validi' });
+  if (!isSomeObjValid(newPutPost, validParams)) return res.status(422).json({ error: 'Controlla che tutti i campi siano validi' });
 
 
-  console.log(requestedItem);
-  requestedItem = updateNewKeys(requestedItem, newPutPost);
-  console.log(requestedItem);
+  updateNewKeys(requestedItem, newPutPost);
 
-
-  res.json('test');
+  res.sendStatus(204);
 };
 
 
@@ -117,6 +114,4 @@ function updateNewKeys(oldObj, newObj) {
   for (const [key, value] of Object.entries(newObj)) {
     if (oldObj.hasOwnProperty(key) && oldObj[key] !== value) oldObj[key] = value;
   };
-
-  return oldObj;
 };
