@@ -28,7 +28,8 @@ function addPost(req, res) {
   const newPost = req.body;
 
   const validParams = ['title', 'slug', 'content', 'image', 'tags']
-  console.log(isObjValid(newPost, validParams));
+  
+  if (!isObjValid(newPost, validParams)) return res.status(422).json({ error: 'Controlla che tutti i campi siano validi', example });
 
   postsData.push(newPost);
   
@@ -75,4 +76,16 @@ module.exports = {
 
 function isObjValid(obj, validParams) {
   return validParams.every(param => obj[param] && obj[param].length >= 3);
+};
+
+const example = {
+  title: 'Torta Demo',
+  slug: 'torta-demo',
+  content: 'demo demo demo demo demo demo demo demo demo demo ',
+  image: 'torta_demo.jpeg',
+  tags: [
+    'Dolci',
+    'Demo',
+    'Torte'
+  ]
 };
