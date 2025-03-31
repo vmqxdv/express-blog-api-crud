@@ -27,9 +27,11 @@ function getPost(req, res) {
 function addPost(req, res) {
   const newPost = req.body;
 
+  const validParams = ['title', 'slug', 'content', 'image', 'tags']
+  console.log(isObjValid(newPost, validParams));
+
   postsData.push(newPost);
   
-  console.log(postsData);
   res.status(201).json();
 };
 
@@ -67,4 +69,10 @@ module.exports = {
   putPost,
   patchPost,
   deletePost,
+};
+
+
+
+function isObjValid(obj, validParams) {
+  return validParams.every(param => obj[param] && obj[param].length >= 3);
 };
