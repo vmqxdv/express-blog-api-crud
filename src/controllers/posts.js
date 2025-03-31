@@ -39,13 +39,13 @@ function patchPost (req, res) {
 
 function deletePost(req, res) {
   const postSlug = req.params.slug;
-  const requestedItem = postsData.find(element => element.slug === postSlug);
+  const requestedItemIndex = postsData.findIndex(element => element.slug === postSlug);
   
-  if (!requestedItem) return res.status(404).json({ error: `Slag '${postSlug}' non trovato` });
+  if (requestedItemIndex < 0) return res.status(404).json({ error: `Slag '${postSlug}' non trovato` });
   
-  const result = postsData.filter(element => element.slug != postSlug);
+  postsData.splice(requestedItemIndex, 1);
 
-  console.log(result);
+  console.log(postsData);
 
   res.status(204).json();
 };
