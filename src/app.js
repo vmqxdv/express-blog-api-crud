@@ -6,6 +6,7 @@ const router = require('./routes/posts');
 app.use(express.static('public'));
 
 app.use('/posts', router);
+app.use(express.json());
 
 app.listen(PORT, () => {
   console.log(`Server avviato su http://localhost:${PORT}`);
