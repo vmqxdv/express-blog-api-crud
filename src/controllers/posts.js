@@ -16,7 +16,7 @@ function getPosts(req, res) {
 
 function getPost(req, res) {
   const postSlug = req.params.slug;
-  const requestedItem = postsData.find(element => element.slug === postSlug);
+  const requestedItem = postsData.find(post => post.slug === postSlug);
 
   if (!requestedItem) return res.status(404).json({ error: `Slag '${postSlug}' non trovato` });
 
@@ -29,16 +29,35 @@ function addPost(req, res) {
 
   const validParams = ['title', 'slug', 'content', 'image', 'tags']
   
-  if (!isObjValid(newPost, validParams)) return res.status(422).json({ error: 'Controlla che tutti i campi siano validi', example });
+  if (!isObjValid(newPost, validParams)) return res.status(422).json({ error: 'Controlla che tutti i campi siano validi', example: postExample });
 
   postsData.push(newPost);
   
-  res.status(201).json();
+  res.sendStatus(201);
 };
 
 
 function putPost(req, res) {
-  res.send('[PUT] Modificato dolce: ' + req.params.slug);
+  const newPutPost = req.body;
+  const newPutPostSlug = req.params.slug;
+  
+
+  const requestedItem = postsData.find(post => post.slug === newPutPostSlug);
+
+  if (!requestedItem) return res.status(404).json({ error: `Slag '${postSlug}' non trovato` });
+
+
+  const validParams = ['title', 'slug', 'content', 'image', 'tags']
+
+  if (!isSomeObjValid(newPost, validParams)) return res.status(422).json({ error: 'Controlla che tutti i campi siano validi' });
+
+
+  console.log(requestedItem);
+  requestedItem = updateNewKeys(requestedItem, newPutPost);
+  console.log(requestedItem);
+
+
+  res.json('test');
 };
 
 
@@ -78,14 +97,26 @@ function isObjValid(obj, validParams) {
   return validParams.every(param => obj[param] && obj[param].length >= 3);
 };
 
-const example = {
+function isSomeObjValid(obj, validParams) {
+  return validParams.some(param => obj[param] && obj[param].length >= 3);
+};
+
+const postExample = {
   title: 'Torta Demo',
   slug: 'torta-demo',
-  content: 'demo demo demo demo demo demo demo demo demo demo ',
+  content: 'demo demo demo demo demo demo demo demo demo demo',
   image: 'torta_demo.jpeg',
   tags: [
     'Dolci',
     'Demo',
     'Torte'
   ]
+};
+
+function updateNewKeys(oldObj, newObj) {
+  for (const [key, value] of Object.entries(newObj)) {
+    if (oldObj.hasOwnProperty(key) && oldObj[key] !== value) oldObj[key] = value;
+  };
+
+  return oldObj;
 };
