@@ -25,8 +25,12 @@ function getPost(req, res) {
 
 
 function addPost(req, res) {
-  console.log(req.body);
-  res.send('test test test');
+  const newPost = req.body;
+
+  postsData.push(newPost);
+  
+  console.log(postsData);
+  res.status(201).json();
 };
 
 
