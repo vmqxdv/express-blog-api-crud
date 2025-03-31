@@ -25,7 +25,8 @@ function getPost(req, res) {
 
 
 function addPost(req, res) {
-  res.send('Aggiunto nuovo dolce: ' + req.params.slug);
+  console.log(req.body);
+  res.send('test test test');
 };
 
 
