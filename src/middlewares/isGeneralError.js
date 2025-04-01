@@ -1,5 +1,5 @@
-function isGeneralError(err, req, res) {
-  res.status(500).json(err.message);
+function isGeneralError(err, req, res, next) {
+  return res.status(500).json({ error: err.message });
 };
 
 
