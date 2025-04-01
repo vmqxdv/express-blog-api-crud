@@ -13,9 +13,15 @@ app.use(express.json());
 
 app.use('/posts', router);
 
-app.use(notFound);
+app.get('/error', (req, res, next) => {
+  const err = new Error("OPS!");
+  next(err); 
+});
 
+
+app.use(notFound);
 app.use(isGeneralError);
+
 
 
 app.listen(PORT, () => {
